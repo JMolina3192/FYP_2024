@@ -1,0 +1,18 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo "Installing dependencies..."
+      - pip install -r requirements.txt
+  build:
+    commands:
+      - echo "Deploying Flask app to EC2 instance..."
+      # Copy files using SCP using the environment variable for the private key
+      - echo "$PRIVATE_KEY" > private_key.pem
+      - chmod 400 private_key.pem
+      - scp -o StrictHostKeyChecking=no -i private_key.pem app.py ubuntu@34.243.110.156:/home/ec2-user/
+      # SSH into EC2 instance and perform setup
+      - ssh -o StrictHostKeyChecking=no -i private_key.pem ubuntu@34.243.110.156 "sudo pip install flask && sudo systemctl restart flask"
+      # Clean up
+      - rm private_key.pem
