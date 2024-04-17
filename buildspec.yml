@@ -36,6 +36,7 @@ version: 0.2
 #       - docker build -t "$DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/flask-awscodepipeline-app:latest"
 #       - docker push "$DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/flask-awscodepipeline-app:latest"
 
+
 phases:
   install:
     runtime-versions:
