@@ -11,7 +11,7 @@ phases:
       # Copy files using SCP using the environment variable for the private key
       - echo "$PRIVATE_KEY" > TestProj1.pem
       - chmod 400 TestProj1.pem
-      - scp -o StrictHostKeyChecking=no -i TestProj1.pem app.py ubuntu@34.243.110.156:/home/ec2-user/
+      - scp -o StrictHostKeyChecking=no -i TestProj1.pem app.py ubuntu@34.243.110.156:/ubuntu/
       # SSH into EC2 instance and perform setup
       - ssh -o StrictHostKeyChecking=no -i pTestProj1.pem ubuntu@34.243.110.156 "sudo pip install flask && sudo systemctl restart flask"
       # Clean up
