@@ -15,4 +15,4 @@ steps:
   args: ['compute', 'ssh', 'linux-web-server', '--command', 'cd /flask_app && docker-compose up -d', '--zone=europe-west1-b', '--project=fyp2024-420113']
 
 options:
-  logsBucket: 'gs://fyp2024_bucket'
+  logging: 'gs://fyp2024_bucket'
