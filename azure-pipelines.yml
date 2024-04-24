@@ -67,9 +67,9 @@ stages:
   - deployment: DeploymentJob
     displayName: Web Deploy
     environment: 
-      name: Test3
+      name: Test4
       resourceType: VirtualMachine
-      resourceName: Test3
+      resourceName: Test4
     # pool:
     #   vmImage: $(vmImageName)
     # environment: $(environmentName)
