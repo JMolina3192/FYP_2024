@@ -14,7 +14,7 @@ variables:
   vmImageName: 'ubuntu-latest'
 
   # # Environment name
-  # environmentName: 'fyp2024-app'
+  environmentName: 'Test3'
 
   # Project root folder. Point to the folder containing manage.py file.
   projectRoot: $(System.DefaultWorkingDirectory)
@@ -34,7 +34,6 @@ stages:
       inputs:
         versionSpec: '$(pythonVersion)'
       displayName: 'Use Python $(pythonVersion)'
-
     - script: |
         python -m venv antenv
         source antenv/bin/activate
@@ -70,7 +69,6 @@ stages:
       runOnce:
         deploy:
           steps:
-  
             - script: |
                 sudo apt update
                 sudo apt install -y python3 python3-pip
