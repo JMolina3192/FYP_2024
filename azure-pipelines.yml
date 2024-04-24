@@ -2,10 +2,7 @@
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
-pool: 
-   name: Default
-   demands:
-    - agent.name -equals Local-Agent
+
 variables:
   # Azure Resource Manager connection created during pipeline creation
   # azureServiceConnectionId: 'b3b07ba4-c98c-451d-886b-25a0409a4203'
@@ -60,6 +57,10 @@ stages:
       artifact: drop
 
 - stage: Deploy
+  pool: 
+   name: Default
+   demands:
+    - agent.name -equals Local-Agent
   displayName: Deploy App
   dependsOn: Build
   condition: succeeded()
