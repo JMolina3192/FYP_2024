@@ -149,13 +149,7 @@ stages:
                 # - script: |
                 #     sudo unzip $(Pipeline.Workspace)/repository/repository.zip -d /home/ubuntu/
                 #   displayName: 'Unpack Repository'
-                - script: |
-                    sudo chmod 755 /home/ubuntu/scripts/install_dependencies.sh
-                    sudo chmod 755 /home/ubuntu/scripts/start_app.sh
-                    sudo chmod 755 /home/ubuntu/scripts/stop_app.sh
-                    sudo chown root:root /home/ubuntu/scripts/*.sh
-                    echo "Permissions set"
-                  displayName: 'Set permissions'
+                
                 - script: |
                     sudo cp /home/ubuntu/FYP_2024/FYP_2024/scripts/fyp.service /etc/systemd/system/
                     sudo systemctl daemon-reload
@@ -167,6 +161,13 @@ stages:
                     # cp /home/ubuntu/FYP_2024/FYP_2024/scripts/fyp.service /etc/systemd/system/
                     echo "Files copied"
                   displayName: 'Copy files'
+                - script: |
+                    sudo chmod 755 /home/ubuntu/scripts/install_dependencies.sh
+                    sudo chmod 755 /home/ubuntu/scripts/start_app.sh
+                    sudo chmod 755 /home/ubuntu/scripts/stop_app.sh
+                    sudo chown root:root /home/ubuntu/scripts/*.sh
+                    echo "Permissions set"
+                  displayName: 'Set permissions'  
                 - script: |
                     sudo /home/ubuntu/scripts/install_dependencies.sh
                   displayName: 'After Install - Install dependencies'
