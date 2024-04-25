@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cd /home/ubuntu/fyp2024-repo/fyp2024-repo
+cd /home/ubuntu/
 python3 app.py
