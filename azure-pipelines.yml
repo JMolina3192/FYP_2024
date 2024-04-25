@@ -144,11 +144,11 @@ stages:
           runOnce:
             deploy:
               steps:
-                - download: current
-                  artifact: repository
-                - script: |
-                    sudo unzip $(Pipeline.Workspace)/repository/repository.zip -d /home/ubuntu/
-                  displayName: 'Unpack Repository'
+                # - download: current
+                #   artifact: repository
+                # - script: |
+                #     sudo unzip $(Pipeline.Workspace)/repository/repository.zip -d /home/ubuntu/
+                #   displayName: 'Unpack Repository'
                 - script: |
                     sudo cp /home/ubuntu/scripts/fyp.service /etc/systemd/system/
                     sudo systemctl daemon-reload
