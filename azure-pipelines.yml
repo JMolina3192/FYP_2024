@@ -168,6 +168,12 @@ stages:
                     echo "Permissions set"
                   displayName: 'Set permissions'
                 - script: |
+                    # Stop application (if needed for the deployment scenario)
+                    sudo /home/ubuntu/scripts/stop_app.sh
+                    echo "Application stopped"
+                  displayName: 'Application Stop'
+                  timeoutInMinutes: 5
+                - script: |
                     sudo /home/ubuntu/scripts/install_dependencies.sh
                   displayName: 'After Install - Install dependencies'
                 - script: |
