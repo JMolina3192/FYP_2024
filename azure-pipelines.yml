@@ -103,8 +103,6 @@ variables:
 pool:
   vmImage: 'ubuntu-latest'
 
-
-
 stages:
   - stage: Build
     displayName: Build stage
