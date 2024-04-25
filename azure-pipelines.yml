@@ -147,7 +147,7 @@ stages:
                 - download: current
                   artifact: repository
                 - script: |
-                    unzip $(Pipeline.Workspace)/repository/repository.zip -d /home/ubuntu/
+                    sudo unzip $(Pipeline.Workspace)/repository/repository.zip -d /home/ubuntu/
                   displayName: 'Unpack Repository'
                 - script: |
                     sudo cp $(Pipeline.Workspace)/repository/fyp.service /etc/systemd/system/
