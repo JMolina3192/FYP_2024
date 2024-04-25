@@ -119,7 +119,7 @@ stages:
               steps:
                 - script: |
                     # Copy the service file to the system directory
-                    sudo cp $(Pipeline.Workspace)/scripts/fyp.service /etc/systemd/system/
+                    sudo cp /home/ubuntu/FYP_2024/FYP_2024/scripts/fyp.service /etc/systemd/system/
                     sudo systemctl daemon-reload
                     sudo systemctl enable fyp.service
                     echo "Service file deployed and enabled"
