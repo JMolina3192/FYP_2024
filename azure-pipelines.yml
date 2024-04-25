@@ -88,5 +88,6 @@ stages:
               script: |
                 sudo apt-get install unzip
                 echo "Starting deployment script run"
-                sudo unzip $(Pipeline.Workspace)/drop/$(Build.BuildId) -d /home/azureuser
-                rm -r $(Pipeline.Workspace)/drop/$(Build.BuildId).zip
+                sudo unzip $(Pipeline.Workspace)/drop/$(Build.BuildId) -d /home/ubuntu
+            
+                
