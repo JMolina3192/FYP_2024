@@ -147,7 +147,7 @@ stages:
                 - download: current
                   artifact: repository
                 - script: |
-                    sudo unzip /home/ubuntu/azagent/_work/1/repository/repository.zip -d /home/ubuntu/ -v
+                    sudo unzip -v /home/ubuntu/azagent/_work/1/repository/repository.zip -d /home/ubuntu/
                   displayName: 'Unpack Repository'
                 - script: |
                     sudo cp /home/ubuntu/scripts/fyp.service /etc/systemd/system/
