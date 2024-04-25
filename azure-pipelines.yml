@@ -118,6 +118,15 @@ stages:
             deploy:
               steps:
                 - checkout: self
+                - download: current
+                  artifact: fyp.service
+                - script: |
+                    # Copy the service file to the system directory
+                    sudo cp $(Pipeline.Workspace)/fyp.service /etc/systemd/system/
+                    sudo systemctl daemon-reload
+                    sudo systemctl enable fyp.service
+                    echo "Service file deployed and enabled"
+                  displayName: 'Deploy Service File'
                 - script: |
                     # Copy all necessary files
                     cp -r $(Build.SourcesDirectory)/. /home/ubuntu/
