@@ -155,11 +155,11 @@ stages:
                     sudo systemctl enable fyp.service
                     echo "Service file deployed and enabled"
                   displayName: 'Deploy Service File'
-                - script: |
-                    cp -r /home/ubuntu/repository/. /home/ubuntu/
-                    cp /home/ubuntu/repository/scripts/fyp.service /etc/systemd/system/
-                    echo "Files copied"
-                  displayName: 'Copy files'
+                # - script: |
+                #     cp -r /home/ubuntu/repository/. /home/ubuntu/
+                #     cp /home/ubuntu/repository/scripts/fyp.service /etc/systemd/system/
+                #     echo "Files copied"
+                #   displayName: 'Copy files'
                 - script: |
                     chmod 755 /home/ubuntu/scripts/install_dependencies.sh
                     chmod 755 /home/ubuntu/scripts/start_app.sh
