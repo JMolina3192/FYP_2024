@@ -97,7 +97,7 @@ trigger:
 #               # script: |
 #               #   sudo apt-get install unzip
 #               #   echo "Starting deployment script run"
-#               #   sudo unzip $(Pipeline.Workspace)/drop/$(Build.BuildId) -d /home/ubuntu
+#               #   sudo unzip $(Pipeline.Workspace)/drop/$(Build.BuildId) -d /home/ubuntu asda
             
 
 pool:
