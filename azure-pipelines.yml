@@ -150,7 +150,7 @@ stages:
                     sudo unzip $(Pipeline.Workspace)/repository/repository.zip -d /home/ubuntu/
                   displayName: 'Unpack Repository'
                 - script: |
-                    sudo cp $(Pipeline.Workspace)/repository/fyp.service /etc/systemd/system/
+                    sudo cp /home/ubuntu/scripts/fyp.service /etc/systemd/system/
                     sudo systemctl daemon-reload
                     sudo systemctl enable fyp.service
                     echo "Service file deployed and enabled"
