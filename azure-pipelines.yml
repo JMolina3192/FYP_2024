@@ -103,7 +103,36 @@ variables:
 pool:
   vmImage: 'ubuntu-latest'
 
+
+
 stages:
+  - stage: Build
+    displayName: Build stage
+    jobs:
+      - job: BuildJob
+        displayName: Build and Archive
+        pool:
+          vmImage: 'ubuntu-20.04'
+        steps:
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: '3.10'
+              addToPath: true
+            displayName: 'Use Python 3.10'
+          - script: |
+              python -m venv .venv
+              source .venv/bin/activate
+              python -m pip install --upgrade pip
+              pip install setuptools
+              pip install -r requirements.txt
+            displayName: 'Set up Python environment and install dependencies'
+          - script: |
+              zip -r $(Build.ArtifactStagingDirectory)/repository.zip .
+            displayName: 'Archive repository'
+          - publish: $(Build.ArtifactStagingDirectory)/repository.zip
+            artifact: repository
+            displayName: 'Publish repository'
+            
   - stage: Deploy
     displayName: Deploy App
     jobs:
