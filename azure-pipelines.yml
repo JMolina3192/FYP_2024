@@ -86,8 +86,17 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
-                sudo apt-get install unzip
+                if ! dpkg -l | grep -qw unzip; then
+                  echo "unzip is not installed. Installing..."
+                  sudo apt-get update
+                  sudo apt-get install -y unzip
+                fi
                 echo "Starting deployment script run"
-                sudo unzip $(Pipeline.Workspace)/drop/$(Build.BuildId) -d /home/ubuntu
+                sudo unzip "$(Pipeline.Workspace)/drop/$(Build.BuildId)" -d /home/ubuntu
+              
+              # script: |
+              #   sudo apt-get install unzip
+              #   echo "Starting deployment script run"
+              #   sudo unzip $(Pipeline.Workspace)/drop/$(Build.BuildId) -d /home/ubuntu
             
                 
