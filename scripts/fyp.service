@@ -4,6 +4,6 @@ After=multi-user.target
 [Service]
 Type=simple
 Restart=always
-ExecStart=/usr/bin/python3 /home/ubuntu/fyp2024-repo/fyp2024-repo/app.py
+ExecStart=/usr/bin/python3 /home/ubuntu/FYP_2024/FYP_2024/app.py
 [Install]
 WantedBy=multi-user.target
