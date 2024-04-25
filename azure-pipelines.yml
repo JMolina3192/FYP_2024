@@ -148,35 +148,29 @@ stages:
                   artifact: repository
                 - script: |
                     unzip $(Pipeline.Workspace)/repository/repository.zip -d /home/ubuntu/
-                    # Restart or start services if necessary here
-                  displayName: 'Deploy Repository and Restart Services'
+                  displayName: 'Unpack Repository'
                 - script: |
-                    # Copy the service file to the system directory
-                    sudo cp /home/ubuntu/FYP_2024/FYP_2024/scripts/fyp.service /etc/systemd/system/
+                    sudo cp $(Pipeline.Workspace)/repository/fyp.service /etc/systemd/system/
                     sudo systemctl daemon-reload
                     sudo systemctl enable fyp.service
                     echo "Service file deployed and enabled"
                   displayName: 'Deploy Service File'
                 - script: |
-                    # Copy all necessary files
-                    sudo cp -r $(Build.SourcesDirectory)/. /home/ubuntu/
-                    sudo cp $(Build.SourcesDirectory)/scripts/fyp.service /etc/systemd/system/
+                    cp -r /home/ubuntu/repository/. /home/ubuntu/
+                    cp /home/ubuntu/repository/scripts/fyp.service /etc/systemd/system/
                     echo "Files copied"
                   displayName: 'Copy files'
                 - script: |
-                    # Set permissions
-                    sudo chmod 755 /home/ubuntu/scripts/install_dependencies.sh
-                    sudo chmod 755 /home/ubuntu/scripts/start_app.sh
-                    sudo chmod 755 /home/ubuntu/scripts/stop_app.sh
-                    sudo chown root:root /home/ubuntu/scripts/*.sh
+                    chmod 755 /home/ubuntu/scripts/install_dependencies.sh
+                    chmod 755 /home/ubuntu/scripts/start_app.sh
+                    chmod 755 /home/ubuntu/scripts/stop_app.sh
+                    chown root:root /home/ubuntu/scripts/*.sh
                     echo "Permissions set"
                   displayName: 'Set permissions'
                 - script: |
-                    # Install dependencies
                     sudo /home/ubuntu/scripts/install_dependencies.sh
                   displayName: 'After Install - Install dependencies'
                 - script: |
-                    # Start application
                     sudo /home/ubuntu/scripts/start_app.sh
                     echo "Application started"
                   displayName: 'Application Start'
