@@ -1,0 +1,9 @@
+requirements.txt
+appspec.yml
+buildspec.yml
+Dockerfile
+README.md
+TestProj1.pem
+azure-pipelines.yml
+cloudbuild.yml
+PAT.txt
