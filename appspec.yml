@@ -1,0 +1,137 @@
+version: 0.0
+
+
+
+os: linux
+
+
+
+files:
+
+
+
+  - source: .
+
+
+
+    destination: /home/ubuntu/
+
+
+
+  - source: ./scripts/fyp.service
+
+
+
+    destination: /etc/systemd/system/
+
+
+
+permissions:
+
+
+
+  - object: /home/ubuntu/scripts/install_dependencies.sh
+
+
+
+    owner: root
+
+
+
+    mode: 755
+
+
+
+    type:
+
+
+
+      - file
+
+
+
+  - object: /home/ubuntu/scripts/start_app.sh
+
+
+
+    owner: root
+
+
+
+    mode: 755
+
+
+
+    type:
+
+
+
+      - file
+
+
+
+  - object: /home/ubuntu/scripts/stop_app.sh
+
+
+
+    owner: root
+
+
+
+    mode: 755
+
+
+
+    type:
+
+
+
+      - file
+
+
+
+hooks:
+
+
+
+  AfterInstall:
+
+
+
+    - location: scripts/install_dependencies.sh
+
+
+
+      runas: root
+
+
+
+  ApplicationStart:
+
+
+
+    - location: scripts/start_app.sh
+
+
+
+      timeout: 300
+
+
+
+      runas: root
+
+
+
+  ApplicationStop:
+
+
+
+    - location: scripts/stop_app.sh
+
+
+
+      timeout: 300
+
+
+
+      runas: root
