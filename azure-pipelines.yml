@@ -119,23 +119,23 @@ stages:
               steps:
                 - script: |
                     # Copy the service file to the system directory
-                    sudo cp $(Pipeline.Workspace)/fyp.service /etc/systemd/system/
+                    sudo cp $(Pipeline.Workspace)/scripts/fyp.service /etc/systemd/system/
                     sudo systemctl daemon-reload
                     sudo systemctl enable fyp.service
                     echo "Service file deployed and enabled"
                   displayName: 'Deploy Service File'
                 - script: |
                     # Copy all necessary files
-                    cp -r $(Build.SourcesDirectory)/. /home/ubuntu/
-                    cp $(Build.SourcesDirectory)/scripts/fyp.service /etc/systemd/system/
+                    sudo cp -r $(Build.SourcesDirectory)/. /home/ubuntu/
+                    sudo cp $(Build.SourcesDirectory)/scripts/fyp.service /etc/systemd/system/
                     echo "Files copied"
                   displayName: 'Copy files'
                 - script: |
                     # Set permissions
-                    chmod 755 /home/ubuntu/scripts/install_dependencies.sh
-                    chmod 755 /home/ubuntu/scripts/start_app.sh
-                    chmod 755 /home/ubuntu/scripts/stop_app.sh
-                    chown root:root /home/ubuntu/scripts/*.sh
+                    sudo chmod 755 /home/ubuntu/scripts/install_dependencies.sh
+                    sudo chmod 755 /home/ubuntu/scripts/start_app.sh
+                    sudo chmod 755 /home/ubuntu/scripts/stop_app.sh
+                    sudo chown root:root /home/ubuntu/scripts/*.sh
                     echo "Permissions set"
                   displayName: 'Set permissions'
                 - script: |
