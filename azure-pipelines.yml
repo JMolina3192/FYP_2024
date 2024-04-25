@@ -174,10 +174,10 @@ stages:
                     echo "Files copied"
                   displayName: 'Copy files'
                 - script: |
-                    sudo bash /home/ubuntu/scripts/install_dependencies.sh
+                    sudo /home/ubuntu/scripts/install_dependencies.sh
                   displayName: 'After Install - Install dependencies'
                 - script: |
-                    sudo bash /home/ubuntu/scripts/start_app.sh
+                    sudo /home/ubuntu/scripts/start_app.sh
                     echo "Application started"
                   displayName: 'Application Start'
                   timeoutInMinutes: 5
