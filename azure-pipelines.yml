@@ -157,12 +157,6 @@ stages:
                     echo "Permissions set"
                   displayName: 'Set permissions'
                 - script: |
-                    # Stop application (if needed for the deployment scenario)
-                    sudo /home/ubuntu/scripts/stop_app.sh
-                    echo "Application stopped"
-                  displayName: 'Application Stop'
-                  timeoutInMinutes: 5
-                - script: |
                     sudo cp /home/ubuntu/FYP_2024/FYP_2024/scripts/fyp.service /etc/systemd/system/
                     sudo systemctl daemon-reload
                     sudo systemctl enable fyp.service
