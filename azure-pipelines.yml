@@ -117,9 +117,6 @@ stages:
           runOnce:
             deploy:
               steps:
-                - checkout: self
-                - download: current
-                  artifact: fyp.service
                 - script: |
                     # Copy the service file to the system directory
                     sudo cp $(Pipeline.Workspace)/fyp.service /etc/systemd/system/
