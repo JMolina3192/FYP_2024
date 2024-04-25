@@ -25,78 +25,127 @@ variables:
   # Python version: 3.10
   pythonVersion: '3.10'
 
-stages:
-- stage: Build
-  displayName: Build stage
-  jobs:
-  - job: BuildJob
-    pool:
-      vmImage: $(vmImageName)
-    steps:
-    - task: UsePythonVersion@0
-      inputs:
-        versionSpec: '$(pythonVersion)'
-      displayName: 'Use Python $(pythonVersion)'
-    - script: |
-        python -m venv antenv
-        source antenv/bin/activate
-        python -m pip install --upgrade pip
-        pip install setup
-        pip install -r requirements.txt
-      workingDirectory: $(projectRoot)
-      displayName: "Install requirements"
+# stages:
+# - stage: Build
+#   displayName: Build stage
+#   jobs:
+#   - job: BuildJob
+#     pool:
+#       vmImage: $(vmImageName)
+#     steps:
+#     - task: UsePythonVersion@0
+#       inputs:
+#         versionSpec: '$(pythonVersion)'
+#       displayName: 'Use Python $(pythonVersion)'
+#     - script: |
+#         python -m venv antenv
+#         source antenv/bin/activate
+#         python -m pip install --upgrade pip
+#         pip install setup
+#         pip install -r requirements.txt
+#       workingDirectory: $(projectRoot)
+#       displayName: "Install requirements"
 
-    - task: ArchiveFiles@2
-      displayName: 'Archive files'
-      inputs:
-        rootFolderOrFile: '$(projectRoot)'
-        includeRootFolder: false
-        archiveType: zip
-        archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-        replaceExistingArchive: true
+#     - task: ArchiveFiles@2
+#       displayName: 'Archive files'
+#       inputs:
+#         rootFolderOrFile: '$(projectRoot)'
+#         includeRootFolder: false
+#         archiveType: zip
+#         archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+#         replaceExistingArchive: true
 
-    - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-      displayName: 'Upload package'
-      artifact: drop
+#     - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+#       displayName: 'Upload package'
+#       artifact: drop
 
-- stage: Deploy
-  displayName: Deploy App
-  dependsOn: Build
-  condition: succeeded()
-  jobs:
-  - deployment: DeploymentJob
-    displayName: Web Deploy
-    environment: 
-      name: Test4
-      resourceType: VirtualMachine
-      resourceName: Test4
-    # pool:
-    #   vmImage: $(vmImageName)
-    # environment: $(environmentName)
-    strategy:
-      runOnce:
-        preDeploy:
-          steps:
-          - download: current
-            artifact: drop
-          - script: echo initialize, cleanup, backup
-        deploy:
-          steps:
-          - task: Bash@3
-            inputs:
-              targetType: 'inline'
-              script: |
-                if ! dpkg -l | grep -qw unzip; then
-                  echo "unzip is not installed. Installing..."
-                  sudo apt-get update
-                  sudo apt-get install -y unzip
-                fi
-                echo "Starting deployment script run"
-                sudo unzip "$(Pipeline.Workspace)/drop/$(Build.BuildId)" -d /home/ubuntu
+# - stage: Deploy
+#   displayName: Deploy App
+#   dependsOn: Build
+#   condition: succeeded()
+#   jobs:
+#   - deployment: DeploymentJob
+#     displayName: Web Deploy
+#     environment: 
+#       name: Test4
+#       resourceType: VirtualMachine
+#       resourceName: Test4
+#     # pool:
+#     #   vmImage: $(vmImageName)
+#     # environment: $(environmentName)
+#     strategy:
+#       runOnce:
+#         preDeploy:
+#           steps:
+#           - download: current
+#             artifact: drop
+#           - script: echo initialize, cleanup, backup
+#         deploy:
+#           steps:
+#           - task: Bash@3
+#             inputs:
+#               targetType: 'inline'
+#               script: |
+#                 if ! dpkg -l | grep -qw unzip; then
+#                   echo "unzip is not installed. Installing..."
+#                   sudo apt-get update
+#                   sudo apt-get install -y unzip
+#                 fi
+#                 echo "Starting deployment script run"
+#                 sudo unzip "$(Pipeline.Workspace)/drop/$(Build.BuildId)" -d /home/ubuntu
               
-              # script: |
-              #   sudo apt-get install unzip
-              #   echo "Starting deployment script run"
-              #   sudo unzip $(Pipeline.Workspace)/drop/$(Build.BuildId) -d /home/ubuntu
+#               # script: |
+#               #   sudo apt-get install unzip
+#               #   echo "Starting deployment script run"
+#               #   sudo unzip $(Pipeline.Workspace)/drop/$(Build.BuildId) -d /home/ubuntu
             
-                
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+  - stage: Deploy
+    displayName: Deploy App
+    jobs:
+      - deployment: DeploymentJob
+        displayName: Web Deploy
+        environment: 
+          name: Test4
+          resourceType: VirtualMachine
+          resourceName: Test4
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
+                - script: |
+                    # Copy all necessary files
+                    cp -r $(Build.SourcesDirectory)/. /home/ubuntu/
+                    cp $(Build.SourcesDirectory)/scripts/fyp.service /etc/systemd/system/
+                    echo "Files copied"
+                  displayName: 'Copy files'
+                - script: |
+                    # Set permissions
+                    chmod 755 /home/ubuntu/scripts/install_dependencies.sh
+                    chmod 755 /home/ubuntu/scripts/start_app.sh
+                    chmod 755 /home/ubuntu/scripts/stop_app.sh
+                    chown root:root /home/ubuntu/scripts/*.sh
+                    echo "Permissions set"
+                  displayName: 'Set permissions'
+                - script: |
+                    # Install dependencies
+                    sudo /home/ubuntu/scripts/install_dependencies.sh
+                  displayName: 'After Install - Install dependencies'
+                - script: |
+                    # Start application
+                    sudo /home/ubuntu/scripts/start_app.sh
+                    echo "Application started"
+                  displayName: 'Application Start'
+                  timeoutInMinutes: 5
+                - script: |
+                    # Stop application (if needed for the deployment scenario)
+                    sudo /home/ubuntu/scripts/stop_app.sh
+                    echo "Application stopped"
+                  displayName: 'Application Stop'
+                  timeoutInMinutes: 5
+
