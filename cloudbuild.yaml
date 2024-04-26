@@ -130,7 +130,7 @@ steps:
     args:
       - '-c'
       - |
-        tar -czf /workspace/FYP_2024.tar.gz --exclude='.git' -C /workspace .
+        tar -czf /workspace/FYP_2024.tar.gz --warning=no-file-changed -C /workspace .
 
   # Copy the tarball to the Compute Engine VM
   - name: 'gcr.io/cloud-builders/gcloud'
