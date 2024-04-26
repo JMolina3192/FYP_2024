@@ -146,7 +146,7 @@ steps:
     args:
       - '-c'
       - |
-        gcloud compute ssh jason_molina@ubuntu --zone europe-west1-b --command 'sudo tar -xzf /home/jason_molina/FYP_2024/FYP_2024/FYP_2024.tar.gz -C /home/jason_molina'
+        gcloud compute ssh jason_molina@ubuntu --zone europe-west1-b --command 'sudo tar -xzf /home/jason_molina/FYP_2024.tar.gz -C /home/jason_molina'
 
 timeout: '1200s'  # Adjust the timeout based on your needs
 
