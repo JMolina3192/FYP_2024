@@ -139,7 +139,7 @@ steps:
       - '-c'
       - |
         gcloud compute ssh jason_molina@ubuntu --command="\
-          tar -czf /home/jason_molina/FYP_2024/FYP_2024.tar.gz /home/jason_molina/FYP_2024/FYP_2024 ." --zone europe-west1-b 
+          tar -czf /home/jason_molina/FYP_2024/FYP_2024/FYP_2024.tar.gz /home/jason_molina/FYP_2024/FYP_2024 ." --zone europe-west1-b 
 
   # SSH into the VM and extract the tarball
   - name: 'gcr.io/cloud-builders/gcloud'
