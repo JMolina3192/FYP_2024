@@ -20,7 +20,7 @@ steps:
     args:
       - '-c'
       - |
-        gcloud compute scp /workspace/test.tar.gz jason_molina@ubuntu:/home/jason_molina/ --zone europe-west1-b
+        gcloud compute scp test.tar.gz jason_molina@ubuntu:/home/jason_molina/ --zone europe-west1-b
 
   
   - name: 'gcr.io/cloud-builders/gcloud'
