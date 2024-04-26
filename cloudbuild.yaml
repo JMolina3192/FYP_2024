@@ -1,3 +1,4 @@
+logsBucket: 'gs://fyp2024_bucket'
 steps:
   # Step 1: Set up Python environment and install dependencies
   - name: 'python:3.10'
