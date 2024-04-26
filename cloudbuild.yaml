@@ -10,7 +10,7 @@ steps:
     args:
       - '-c'
       - |
-        tar -czf /workspace/.git/FYP_2024/FYP_2024.tar.gz -C /workspace .
+        tar -czf /workspace/.git/JMolina3192/FYP_2024.tar.gz -C /workspace .
 
   
   - name: 'gcr.io/cloud-builders/gcloud'
@@ -18,7 +18,7 @@ steps:
     args:
       - '-c'
       - |
-        gcloud compute scp /workspace/.git/FYP_2024/FYP_2024.tar.gz jason_molina@ubuntu:/home/jason_molina/ --zone europe-west1-b
+        gcloud compute scp /workspace/.git/JMolina3192/FYP_2024.tar.gz jason_molina@ubuntu:/home/jason_molina/ --zone europe-west1-b
 
   
   - name: 'gcr.io/cloud-builders/gcloud'
