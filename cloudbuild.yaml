@@ -125,7 +125,7 @@ options:
 
 steps:
   # Package the directory into a tarball
-  - name: 'ubuntu'
+  - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: 'bash'
     args:
       - '-c'
