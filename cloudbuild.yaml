@@ -130,9 +130,7 @@ steps:
   #   args:
   #     - '-c'
   #     - |
-  #       cp -r /workspace /workspace_snapshot
-  #       tar -czf /workspace/.git/FYP_2024.tar.gz -C /workspace_snapshot .
-  #       rm -rf /workspace_snapshot
+  #       tar -czf /workspace/.git/FYP_2024.tar.gz -C /workspace . 
 
   # Copy the tarball to the Compute Engine VM
   - name: 'gcr.io/cloud-builders/gcloud'
@@ -141,15 +139,15 @@ steps:
       - '-c'
       - |
         gcloud compute ssh jason_molina@ubuntu --command="\
-          sudo cp -r /home/jason_molina/FYP_2024/FYP_2024 /home/jason_molina/" --zone europe-west1-b 
+          tar -czf /home/jason_molina/FYP_2024/FYP_2024.tar.gz /home/jason_molina/FYP_2024/FYP_2024 ." --zone europe-west1-b 
 
-  # # SSH into the VM and extract the tarball
-  # - name: 'gcr.io/cloud-builders/gcloud'
-  #   entrypoint: 'bash'
-  #   args:
-  #     - '-c'
-  #     - |
-  #       gcloud compute ssh jason_molina@ubuntu --zone europe-west1-b --command 'sudo tar -xzf /home/jason_molina/.git/FYP_2024.tar.gz -C /home/jason_molina'
+  # SSH into the VM and extract the tarball
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        gcloud compute ssh jason_molina@ubuntu --zone europe-west1-b --command 'sudo tar -xzf /home/jason_molina/FYP_2024/FYP_2024.tar.gz -C /home/jason_molina'
 
   # - name: 'gcr.io/cloud-builders/gcloud'
   #   entrypoint: 'bash'
