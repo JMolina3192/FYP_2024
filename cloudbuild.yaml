@@ -3,38 +3,38 @@ options:
   logging: GCS_ONLY
 steps:
   # Step 1: Set up Python environment and install dependencies
-- name: 'python:3.10'
-  entrypoint: 'bash'
-  args:
-    - '-c'
-    - |
-      python -m venv antenv
-      source antenv/bin/activate
-      python -m pip install --upgrade pip
-      pip install setuptools
+#   - name: 'python:3.10'
+#     entrypoint: 'bash'
+#     args:
+#       - '-c'
+#       - |
+#         python -m venv antenv
+#         source antenv/bin/activate
+#         python -m pip install --upgrade pip
+#         pip install setuptools
+
+    
+#   - name: 'ubuntu'
+#     entrypoint: 'bash'
+#     args:
+#       - '-c'
+#       - |
+#         tar -czf build.tar.gz .
 
   
-- name: 'ubuntu'
-  entrypoint: 'bash'
-  args:
-    - '-c'
-    - |
-      tar -czf build.tar.gz .
+# artifacts:
+#   objects:
+#     location: 'gs://fyp2024_bucket/build-artifacts/'
+#     paths:
+#         - 'build.tar.gz'
 
-  
-artifacts:
-  objects:
-    location: 'gs://fyp2024_bucket/build-artifacts/'
-    paths:
-        - 'build.tar.gz'
-
-- name: 'gcr.io/cloud-builders/gcloud'
-  entrypoint: 'bash'
-  args:
-    - '-c'
-    - |
-      gcloud compute scp build.tar.gz jason_molina@ubuntu:/home/jason_molina/
-      gcloud compute ssh ubuntu@your-vm-name --command="tar -xzf /home/jason_molina/build.tar.gz -C /home/jason_molina/"
+# - name: 'gcr.io/cloud-builders/gcloud'
+#   entrypoint: 'bash'
+#   args:
+#     - '-c'
+#     - |
+#       gcloud compute scp build.tar.gz jason_molina@ubuntu:/home/jason_molina/
+#       gcloud compute ssh ubuntu@your-vm-name --command="tar -xzf /home/jason_molina/build.tar.gz -C /home/jason_molina/"
 
 - name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
