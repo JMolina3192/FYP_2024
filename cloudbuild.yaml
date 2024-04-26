@@ -10,7 +10,9 @@ steps:
     args:
       - '-c'
       - |
-        tar -czf /workspace/.git/JMolina3192/FYP_2024.tar.gz -C /workspace .
+        mkdir test
+        cp -r /workspace/.git/FYP_2024 /test 
+        tar -czf /workspace/test.tar.gz -C /test .
 
   
   - name: 'gcr.io/cloud-builders/gcloud'
@@ -18,7 +20,7 @@ steps:
     args:
       - '-c'
       - |
-        gcloud compute scp /workspace/.git/JMolina3192/FYP_2024.tar.gz jason_molina@ubuntu:/home/jason_molina/ --zone europe-west1-b
+        gcloud compute scp /workspace/test.tar.gz jason_molina@ubuntu:/home/jason_molina/ --zone europe-west1-b
 
   
   - name: 'gcr.io/cloud-builders/gcloud'
@@ -26,7 +28,7 @@ steps:
     args:
       - '-c'
       - |
-        gcloud compute ssh jason_molina@ubuntu --zone europe-west1-b --command 'sudo tar -xzf /home/jason_molina/FYP_2024.tar.gz -C /home/jason_molina'
+        gcloud compute ssh jason_molina@ubuntu --zone europe-west1-b --command 'sudo tar -xzf /home/jason_molina/test.tar.gz -C /home/jason_molina'
 
 timeout: '1200s'  
 
