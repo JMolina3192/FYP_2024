@@ -102,7 +102,7 @@ steps:
     args:
       - '-c'
       - |
-        gcloud compute scp /jason_molina/FYP_2024/FYP_2024/scripts/fyp.service jason_molina@ubuntu:/etc/systemd/system/ --zone europe-west1-b
+        gcloud compute scp jason_molina/FYP_2024/FYP_2024/scripts/fyp.service jason_molina@ubuntu:/etc/systemd/system/ --zone europe-west1-b
         gcloud compute ssh jason_molina@ubuntu --command="\
           sudo systemctl daemon-reload && \
           sudo systemctl enable fyp.service && \
@@ -117,8 +117,8 @@ steps:
           sudo chmod 755 /jason_molina/scripts/*.sh && \
           sudo chown root:root /home/ubuntu/scripts/*.sh && \
           echo 'Permissions set' && \
-          sudo /jason_molinascripts/install_dependencies.sh && \
-          sudo /jason_molinascripts/start_app.sh && \
+          sudo jason_molina/scripts/install_dependencies.sh && \
+          sudo jason_molina/scripts/start_app.sh && \
           echo 'Application started'" --zone europe-west1-b
 
 timeout: 1200s
