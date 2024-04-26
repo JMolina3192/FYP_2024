@@ -19,11 +19,11 @@ steps:
         tar -czf build.tar.gz .
 
   # Artifacts (optional step if you need to store build artifacts in Google Cloud Storage)
-  - artifacts:
-    objects:
-      location: 'gs://your-bucket-name/build-artifacts/'
-      paths:
-        - 'build.tar.gz'
+artifacts:
+  objects:
+    location: 'gs://fyp2024_bucket/build-artifacts/'
+    paths:
+      - 'build.tar.gz'
 
   # Deploy steps
   - name: 'gcr.io/cloud-builders/gcloud'
