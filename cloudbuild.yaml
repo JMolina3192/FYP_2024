@@ -102,7 +102,7 @@ steps:
     args:
       - '-c'
       - |
-        gcloud compute scp /home/jason_molina/FYP_2024/FYP_2024/fyp.service jason_molina@ubuntu:/etc/systemd/system/ --zone europe-west1-b
+        gcloud compute scp /home/jason_molina/FYP_2024/FYP_2024/scripts/fyp.service jason_molina@ubuntu:/etc/systemd/system/ --zone europe-west1-b
         gcloud compute ssh jason_molina@ubuntu --command="\
           sudo systemctl daemon-reload && \
           sudo systemctl enable fyp.service && \
