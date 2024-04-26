@@ -148,18 +148,18 @@ steps:
       - |
         gcloud compute ssh jason_molina@ubuntu --zone europe-west1-b --command 'sudo tar -xzf /home/jason_molina/FYP_2024.tar.gz -C /home/jason_molina'
 
-  - name: 'gcr.io/cloud-builders/gcloud'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        gcloud compute ssh jason_molina@ubuntu --command="\
-          sudo chmod 755 /home/jason_molina/scripts/*.sh && \
-          sudo chown root:root /home/jason_molina/scripts/*.sh && \
-          echo 'Permissions set' && \
-          sudo /home/jason_molina/scripts/install_dependencies.sh && \
-          sudo /home/jason_molina/scripts/start_app.sh && \
-          echo 'Application started'" --zone europe-west1-b
+  # - name: 'gcr.io/cloud-builders/gcloud'
+  #   entrypoint: 'bash'
+  #   args:
+  #     - '-c'
+  #     - |
+  #       gcloud compute ssh jason_molina@ubuntu --command="\
+  #         sudo chmod 755 /home/jason_molina/scripts/*.sh && \
+  #         sudo chown root:root /home/jason_molina/scripts/*.sh && \
+  #         echo 'Permissions set' && \
+  #         sudo /home/jason_molina/scripts/install_dependencies.sh && \
+  #         sudo /home/jason_molina/scripts/start_app.sh && \
+  #         echo 'Application started'" --zone europe-west1-b
 
 timeout: '1200s'  # Adjust the timeout based on your needs
 
