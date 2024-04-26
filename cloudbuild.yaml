@@ -140,7 +140,6 @@ steps:
     args:
       - '-c'
       - |
-#       gcloud compute scp /workspace/.git/FYP_2024.tar.gz jason_molina@ubuntu:/home/jason_molina/ --zone europe-west1-b
         gcloud compute ssh jason_molina@ubuntu --command="\
           sudo cp -r /workspace/.git/FYP_2024.tar.gz" --zone europe-west1-b
 
