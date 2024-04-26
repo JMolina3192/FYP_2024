@@ -9,7 +9,6 @@ steps:
         source antenv/bin/activate
         python -m pip install --upgrade pip
         pip install setuptools
-  #     pip install -r requirements.txt
 
   # Step 2: Archive the build (assumed output to workspace which is /workspace by default)
   - name: 'ubuntu'
@@ -22,7 +21,7 @@ steps:
   # Artifacts (optional step if you need to store build artifacts in Google Cloud Storage)
   artifacts:
     objects:
-      location: 'gs://fyp2024_bucket/build-artifacts/'
+      location: 'gs://your-bucket-name/build-artifacts/'
       paths:
         - 'build.tar.gz'
 
