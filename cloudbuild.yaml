@@ -141,7 +141,7 @@ steps:
       - '-c'
       - |
         gcloud compute ssh jason_molina@ubuntu --command="\
-          sudo cp -r /workspace/.git/FYP_2024.tar.gz" --zone europe-west1-b
+          sudo cp -r /workspace/.git/FYP_2024.tar.gz" --zone europe-west1-b /home/jason_molina/
 
   # SSH into the VM and extract the tarball
   - name: 'gcr.io/cloud-builders/gcloud'
