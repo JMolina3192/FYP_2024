@@ -130,7 +130,7 @@ steps:
     args:
       - '-c'
       - |
-        tar -czf /workspace/JMolina3192/FYP_2024.tar.gz -C /workspace/JMolina3192/FYP_2024 .
+        tar -czf /workspace.tar.gz -C /workspace .
 
   # Copy the tarball to the Compute Engine VM
   - name: 'ubuntu'
@@ -138,7 +138,7 @@ steps:
     args:
       - '-c'
       - |
-        gcloud compute scp /workspace/JMolina3192/FYP_2024.tar.gz jason_molina@ubuntu:/home/jason_molina/FYP_2024/FYP_2024 --zone europe-west1-b
+        gcloud compute scp /workspace.tar.gz jason_molina@ubuntu:/home/jason_molina/ --zone europe-west1-b
 
   # SSH into the VM and extract the tarball
   - name: 'ubuntu'
