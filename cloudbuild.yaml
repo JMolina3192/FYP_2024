@@ -92,7 +92,7 @@ steps:
       - '-c'
       - |
         gcloud compute ssh jason_molina@ubuntu --command="\
-          sudo cp -r jason_molina/FYP_2024/FYP_2024 /home/jason_molina/ --zone europe-west1-b
+          sudo cp -r jason_molina/FYP_2024/FYP_2024 /home/jason_molina/" --zone europe-west1-b
 
   #       gcloud compute scp build.tar.gz jason_molina@ubuntu:/home/jason_molina/ --zone europe-west1-b
   #       gcloud compute ssh jason_molina@ubuntu --command="tar -xzf /home/jason_molina/build.tar.gz -C /home/jason_molina/" --zone europe-west1-b
