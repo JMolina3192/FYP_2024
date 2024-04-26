@@ -146,8 +146,6 @@ steps:
     args:
       - '-c'
       - |
-      
-        # Clone the repository if it does not exist, or pull if it does
         gcloud compute ssh jason_molina@ubuntu --zone europe-west1-b --command 'git -C /home/jason_molina/FYP_2024/FYP_2024 pull || git clone https://JMolina3192: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@github.com/JMolina3192/FYP_2024.git /home/jason_molina/FYP_2024/FYP_2024'
 
 
@@ -157,7 +155,7 @@ steps:
     args:
       - '-c'
       - |
-        # gcloud compute ssh jason_molina@ubuntu --zone europe-west1-b --command 'sudo tar -xzf /home/jason_molina/FYP_2024.tar.gz -C /home/jason_molina'
+        
         gcloud compute ssh jason_molina@ubuntu --zone europe-west1-b --command 'sudo cp -r /home/jason_molina/FYP_2024/FYP_2024 -C /home/jason_molina'
 
   # - name: 'gcr.io/cloud-builders/gcloud'
@@ -172,6 +170,7 @@ steps:
   #         sudo /home/jason_molina/scripts/install_dependencies.sh && \
   #         sudo /home/jason_molina/scripts/start_app.sh && \
   #         echo 'Application started'" --zone europe-west1-b
+  # gcloud compute ssh jason_molina@ubuntu --zone europe-west1-b --command 'sudo tar -xzf /home/jason_molina/FYP_2024.tar.gz -C /home/jason_molina'
 
 timeout: '1200s'  # Adjust the timeout based on your needs
 
