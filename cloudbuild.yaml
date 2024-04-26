@@ -86,27 +86,27 @@ steps:
   #     - |
   #       tar -czf build.tar.gz .
 
-  # - name: 'gcr.io/cloud-builders/gcloud'
-  #   entrypoint: 'bash'
-  #   args:
-  #     - '-c'
-  #     - |
-  #       gcloud compute ssh jason_molina@ubuntu --command="\
-  #         sudo cp -r /home/jason_molina/FYP_2024/FYP_2024 /home/jason_molina/ --zone europe-west1-b
-
-  #       gcloud compute scp build.tar.gz jason_molina@ubuntu:/home/jason_molina/ --zone europe-west1-b
-  #       gcloud compute ssh jason_molina@ubuntu --command="tar -xzf /home/jason_molina/build.tar.gz -C /home/jason_molina/" --zone europe-west1-b
-
   - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: 'bash'
     args:
       - '-c'
       - |
-        gcloud compute scp jason_molina/FYP_2024/FYP_2024/scripts/fyp.service jason_molina@ubuntu:/etc/systemd/system/ --zone europe-west1-b
         gcloud compute ssh jason_molina@ubuntu --command="\
-          sudo systemctl daemon-reload && \
-          sudo systemctl enable fyp.service && \
-          echo 'Service file deployed and enabled'" --zone europe-west1-b
+          sudo cp -r jason_molina/FYP_2024/FYP_2024 /home/jason_molina/ --zone europe-west1-b
+
+  #       gcloud compute scp build.tar.gz jason_molina@ubuntu:/home/jason_molina/ --zone europe-west1-b
+  #       gcloud compute ssh jason_molina@ubuntu --command="tar -xzf /home/jason_molina/build.tar.gz -C /home/jason_molina/" --zone europe-west1-b
+
+  # - name: 'gcr.io/cloud-builders/gcloud'
+  #   entrypoint: 'bash'
+  #   args:
+  #     - '-c'
+  #     - |
+  #       gcloud compute scp jason_molina/FYP_2024/FYP_2024/scripts/fyp.service jason_molina@ubuntu:/etc/systemd/system/ --zone europe-west1-b
+  #       gcloud compute ssh jason_molina@ubuntu --command="\
+  #         sudo systemctl daemon-reload && \
+  #         sudo systemctl enable fyp.service && \
+  #         echo 'Service file deployed and enabled'" --zone europe-west1-b
 
   - name: 'gcr.io/cloud-builders/gcloud'
     entrypoint: 'bash'
