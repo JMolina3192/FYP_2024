@@ -11,7 +11,7 @@ steps:
       - '-c'
       - |
         mkdir test
-        cp -r /workspace/.git/FYP_2024 /test 
+        cp -r /workspace/FYP_2024 /test 
         tar -czf /workspace/test.tar.gz -C /test .
 
   
