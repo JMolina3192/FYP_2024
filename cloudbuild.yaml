@@ -130,7 +130,7 @@ steps:
     args:
       - '-c'
       - |
-        tar -czf /workspace/FYP_2024.tar.gz -C /workspace/FYP_2024 .
+        tar -czf /workspace/JMolina3192/FYP_2024.tar.gz -C /workspace/JMolina3192/FYP_2024 .
 
   # Copy the tarball to the Compute Engine VM
   - name: 'ubuntu'
@@ -138,7 +138,7 @@ steps:
     args:
       - '-c'
       - |
-        gcloud compute scp /workspace/FYP_2024.tar.gz jason_molina@ubuntu:/home/jason_molina/FYP_2024/FYP_2024 --zone europe-west1-b
+        gcloud compute scp /workspace/JMolina3192/FYP_2024.tar.gz jason_molina@ubuntu:/home/jason_molina/FYP_2024/FYP_2024 --zone europe-west1-b
 
   # SSH into the VM and extract the tarball
   - name: 'ubuntu'
@@ -146,7 +146,7 @@ steps:
     args:
       - '-c'
       - |
-        gcloud compute ssh username@vm-instance-name --zone europe-west1-b --command 'sudo tar -xzf /home/jason_molina/FYP_2024/FYP_2024/FYP_2024.tar.gz -C /home/jason_molina'
+        gcloud compute ssh jason_molina@ubuntu --zone europe-west1-b --command 'sudo tar -xzf /home/jason_molina/FYP_2024/FYP_2024/FYP_2024.tar.gz -C /home/jason_molina'
 
 timeout: '1200s'  # Adjust the timeout based on your needs
 
