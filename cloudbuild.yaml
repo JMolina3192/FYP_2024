@@ -1,18 +1,64 @@
 steps:
-- name: 'gcr.io/cloud-builders/git'
-  args: ['clone', 'https://github.com/GoogleCloudPlatform/cloud-builders-community.git']
+  # Step 1: Set up Python environment and install dependencies
+  - name: 'python:3.10'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        python -m venv antenv
+        source antenv/bin/activate
+        python -m pip install --upgrade pip
+        pip install setuptools
+  #     pip install -r requirements.txt
 
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/$PROJECT_ID/flask-app', '.']
+  # Step 2: Archive the build (assumed output to workspace which is /workspace by default)
+  - name: 'ubuntu'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        tar -czf build.tar.gz .
 
-- name: 'gcr.io/cloud-builders/gcloud'
-  args: ['compute', 'instances', 'reset', 'linux-web-server', '--zone=europe-west1-b', '--project=fyp2024-420113 ']
+  # Artifacts (optional step if you need to store build artifacts in Google Cloud Storage)
+  artifacts:
+    objects:
+      location: 'gs://fyp2024_bucket/build-artifacts/'
+      paths:
+        - 'build.tar.gz'
 
-- name: 'gcr.io/cloud-builders/gcloud'
-  args: ['compute', 'scp', '--recurse', '.', 'linux-web-server:/flask_app', '--zone=europe-west1-b', '--project=fyp2024-420113']
+  # Deploy steps
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        gcloud compute scp build.tar.gz jason_molina@ubuntu:/home/jason_molina/
+        gcloud compute ssh ubuntu@your-vm-name --command="tar -xzf /home/jason_molina/build.tar.gz -C /home/jason_molina/"
 
-- name: 'gcr.io/cloud-builders/gcloud'
-  args: ['compute', 'ssh', 'linux-web-server', '--command', 'cd /flask_app && docker-compose up -d', '--zone=europe-west1-b', '--project=fyp2024-420113']
+  # Copy and set up systemd service
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        gcloud compute scp /home/jason_molina/FYP_2024/fyp.service jason_molina@ubuntu:/etc/systemd/system/
+        gcloud compute ssh jason_molina@ubuntu: --command="\
+          sudo systemctl daemon-reload && \
+          sudo systemctl enable fyp.service && \
+          echo 'Service file deployed and enabled'"
 
-options:
-  logging: CLOUD_LOGGING_ONLY
+  # Set permissions and execute scripts
+  - name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        gcloud compute ssh jason_molina@ubuntu: --command="\
+          sudo chmod 755 /home/ubuntu/scripts/*.sh && \
+          sudo chown root:root /home/ubuntu/scripts/*.sh && \
+          echo 'Permissions set' && \
+          sudo /home/ubuntu/scripts/install_dependencies.sh && \
+          sudo /home/ubuntu/scripts/start_app.sh && \
+          echo 'Application started'"
+
+timeout: 1200s  # Timeout for the whole build
