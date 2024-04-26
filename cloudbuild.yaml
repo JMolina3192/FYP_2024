@@ -13,7 +13,7 @@ steps:
       python -m pip install --upgrade pip
       pip install setuptools
 
-  # Step 2: Archive the build (assumed output to workspace which is /workspace by default)
+  
 - name: 'ubuntu'
   entrypoint: 'bash'
   args:
@@ -21,14 +21,13 @@ steps:
     - |
       tar -czf build.tar.gz .
 
-  #Artifacts (optional step if you need to store build artifacts in Google Cloud Storage)
+  
 artifacts:
   objects:
     location: 'gs://fyp2024_bucket/build-artifacts/'
     paths:
         - 'build.tar.gz'
 
-  # Deploy steps
 - name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
   args:
@@ -37,7 +36,6 @@ artifacts:
       gcloud compute scp build.tar.gz jason_molina@ubuntu:/home/jason_molina/
       gcloud compute ssh ubuntu@your-vm-name --command="tar -xzf /home/jason_molina/build.tar.gz -C /home/jason_molina/"
 
-  # Copy and set up systemd service
 - name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
   args:
@@ -49,7 +47,7 @@ artifacts:
         sudo systemctl enable fyp.service && \
         echo 'Service file deployed and enabled'"
 
-  # Set permissions and execute scripts
+  
 - name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
   args:
@@ -63,4 +61,4 @@ artifacts:
         sudo /home/ubuntu/scripts/start_app.sh && \
         echo 'Application started'"
 
-timeout: 1200s  # Timeout for the whole build
+timeout: 1200s  
