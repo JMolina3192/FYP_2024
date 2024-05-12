@@ -98,11 +98,6 @@ stages:
                     echo "Application started"
                   displayName: 'Application Start'
                   timeoutInMinutes: 5
-                # - script: |
-                #     # Stop application (if needed for the deployment scenario)
-                #     sudo /home/ubuntu/scripts/stop_app.sh
-                #     echo "Application stopped"
-                #   displayName: 'Application Stop'
-                #   timeoutInMinutes: 5
+                
                 
 
